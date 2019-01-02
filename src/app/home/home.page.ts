@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { AlertController, Platform } from '@ionic/angular';
 import { LearnNotificationService } from '../service/learn-notification.service';
+import { StorageService } from '../service/storage.service';
 
 
 @Component({
@@ -12,41 +13,36 @@ import { LearnNotificationService } from '../service/learn-notification.service'
 export class HomePage {
   private translations;
 
-  constructor(private storage: Storage, public alertController: AlertController, private notification: LearnNotificationService) { 
+  constructor(private storageService: StorageService, public alertController: AlertController, private notificationService: LearnNotificationService) { 
    this.loadMyWords();
   }
 
   save(frenchWord, englishWord){
-    console.log(frenchWord)
     if(frenchWord && englishWord){
-      this.storage.get('translation').then((listWordsTranslated) => {
+      this.storageService.loadStorageFromLocation('translation').then((listWordsTranslated) => {
+        console.log('save', listWordsTranslated)
         listWordsTranslated.push({
           created_at: new Date(),
           french: frenchWord,
           english: englishWord,
           level: 1
         })
-        console.log(listWordsTranslated)
-        this.storage.set('translation', listWordsTranslated);
+        this.storageService.setStorageFromLocation('translation', listWordsTranslated)
         this.loadMyWords();
-      });
+      })
     }
   }
 
   loadMyWords(){
-    this.storage.get('translation').then((val) => {
+    this.storageService.loadStorageFromLocation('translation').then((val) => {
+      console.log(val)
       if(val){
         this.translations = val;
         console.log(this.translations)
       } else {
-        this.storage.set('translation', []);
+        this.storageService.setStorageFromLocation('translation', [])
       }
-    });
-  }
-
-  clearAll(){
-    this.storage.set('translation', []);
-    this.loadMyWords();
+    })
   }
 
   arrayOne(n: number): any[] {
@@ -69,7 +65,7 @@ export class HomePage {
           text: 'Okay',
           handler: () => {
             this.translations.splice(index, 1);
-            this.storage.set('translation', this.translations);
+            this.storageService.setStorageFromLocation('translation', this.translations)
             this.loadMyWords();
           }
         }
@@ -80,7 +76,7 @@ export class HomePage {
   }
 
   createNotification(){
-    this.notification.createNotification();
+    this.notificationService.createNotification();
   }
 
 }
