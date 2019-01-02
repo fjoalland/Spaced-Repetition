@@ -14,10 +14,9 @@ import { IonicStorageModule } from '@ionic/storage';
 import { LearnNotificationService } from './service/learn-notification.service';
 import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
-import { ExerciceComponent } from './exercice/exercice.component';
 
 @NgModule({
-  declarations: [AppComponent, ExerciceComponent],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,

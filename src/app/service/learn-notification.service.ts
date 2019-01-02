@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
-import { Observable } from 'rxjs';
-import { Platform } from '@ionic/angular';
+import { Platform, NavController } from '@ionic/angular';
   @Injectable({
   providedIn: 'root'
 })
 export class LearnNotificationService {
 
-  constructor(private localNotifications: LocalNotifications, private platform: Platform) {
-    //  this.platform.ready().then(()=> {
-       this.localNotifications.on('yes').subscribe(notification => {
+  constructor(private localNotifications: LocalNotifications, private platform: Platform, private navCtrl: NavController) {
+     this.platform.ready().then(()=> {
+       this.localNotifications.on('click').subscribe(notification => {
         console.log(notification)
         alert(notification.data.secret)
-         notification.data;
+        this.navCtrl.navigateForward('exercice');
        });
-    // })
+    })
   }
 
   //  getDataNotification(){
@@ -26,7 +25,6 @@ export class LearnNotificationService {
   //      });
   //   })
   //  }
-
   createNotification(){
     this.platform.ready().then(()=> {
       this.localNotifications.requestPermission().then(
@@ -44,7 +42,6 @@ export class LearnNotificationService {
 
             this.localNotifications.schedule({
               text: "Let's go! We have to learn.",
-              actions: [{ id: 'yes', title: 'Yes' }],
               trigger: {at: nextExerciceDate},
               led: 'FF0000',
               sound: null,
