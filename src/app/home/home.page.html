@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Spaced Repetition 
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+      
+      <div padding>
+          <ion-list>
+
+              <ion-item>
+                <ion-label>French</ion-label>
+                <ion-input type="text" #frenchWord></ion-input>
+              </ion-item>
+            
+              <ion-item>
+                <ion-label>Enlish</ion-label>
+                <ion-input type="text" #englishWord></ion-input>
+              </ion-item>
+            
+            </ion-list>
+            
+        <ion-button expand="full" color="primary" (click)="save(frenchWord.value, englishWord.value)">Save It</ion-button>
+        <ion-button color="danger" (click)="createNotification()">Notif</ion-button>
+        <br/>
+        <ion-header>
+
+          <ion-toolbar>
+            <ion-title>My learning words</ion-title>
+          </ion-toolbar>
+        
+        </ion-header>
+        <ion-grid>
+            <ion-row ion-item *ngFor="let item of translations; index as i">
+              <ion-col col-4>{{ item.french }}</ion-col>
+              <ion-col col-4>{{ item.english}}</ion-col>
+              <ion-col col-2>              
+                <ion-icon name="star" *ngFor="let level of arrayOne(item.level); let i = index;"></ion-icon>              
+              </ion-col>
+              <ion-col col-1>
+                  <ion-icon name="trash"  (click)="delete(i)"></ion-icon>
+              </ion-col>  
+              </ion-row>
+          </ion-grid>
+      </div>
+</ion-content>
