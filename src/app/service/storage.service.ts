@@ -8,12 +8,12 @@ export class StorageService {
 
   constructor(private storage: Storage) { }
 
-  loadStorageFromLocation(location){
+  getStorageFromLocation(location){
     return this.storage.get(location).then((val) => {
       return val;
     });
   }
-
+  
   setStorageFromLocation(location, storage){
     return this.storage.set(location, storage);
   }

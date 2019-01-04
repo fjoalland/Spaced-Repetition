@@ -20,13 +20,23 @@
               </ion-item>
             
               <ion-item>
-                <ion-label>Enlish</ion-label>
+                <ion-label>English</ion-label>
                 <ion-input type="text" #englishWord></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>My level</ion-label>
+                <ion-select value="1" okText="Okay" cancelText="Dismiss" #myLevel>
+                  <ion-select-option value=1>Never see it!</ion-select-option>
+                  <ion-select-option value=2>Maybe</ion-select-option>
+                  <ion-select-option value=3>I saw it</ion-select-option>
+                  <ion-select-option value=4>I heard it</ion-select-option>
+                </ion-select>
               </ion-item>
             
             </ion-list>
             
-        <ion-button expand="full" color="primary" (click)="save(frenchWord.value, englishWord.value)">Save It</ion-button>
+        <ion-button expand="full" color="primary" (click)="save(frenchWord.value, englishWord.value, myLevel.value)">Save It</ion-button>
         <ion-button color="danger" (click)="createNotification()">Notif</ion-button>
         <br/>
         <ion-header>

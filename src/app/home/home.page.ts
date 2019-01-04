@@ -17,15 +17,15 @@ export class HomePage {
    this.loadMyWords();
   }
 
-  save(frenchWord, englishWord){
+  save(frenchWord, englishWord, myLevel){
     if(frenchWord && englishWord){
-      this.storageService.loadStorageFromLocation('translation').then((listWordsTranslated) => {
+      this.storageService.getStorageFromLocation('translation').then((listWordsTranslated) => {
         console.log('save', listWordsTranslated)
         listWordsTranslated.push({
           created_at: new Date(),
           french: frenchWord,
           english: englishWord,
-          level: 1
+          level: parseInt(myLevel)
         })
         this.storageService.setStorageFromLocation('translation', listWordsTranslated)
         this.loadMyWords();
@@ -34,10 +34,10 @@ export class HomePage {
   }
 
   loadMyWords(){
-    this.storageService.loadStorageFromLocation('translation').then((val) => {
+    this.storageService.getStorageFromLocation('translation').then((val) => {
       console.log(val)
       if(val){
-        this.translations = val;
+        this.translations = val;  
         console.log(this.translations)
       } else {
         this.storageService.setStorageFromLocation('translation', [])
