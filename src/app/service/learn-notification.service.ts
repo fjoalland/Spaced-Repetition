@@ -7,24 +7,17 @@ import { Platform, NavController } from '@ionic/angular';
 export class LearnNotificationService {
 
   constructor(private localNotifications: LocalNotifications, private platform: Platform, private navCtrl: NavController) {
-     this.platform.ready().then(()=> {
-       this.localNotifications.on('click').subscribe(notification => {
+  }
+
+   catchNotification(){
+    this.platform.ready().then(()=> {
+      this.localNotifications.on('click').subscribe(notification => {
         console.log(notification)
         alert(notification.data.secret)
         this.navCtrl.navigateForward('exercice');
        });
     })
-  }
-
-  //  getDataNotification(){
-  //   return this.platform.ready().then(()=> {
-  //     return this.localNotifications.on('click').subscribe(notification => {
-  //       console.log(notification)
-  //       alert(notification.data.secret)
-  //       return notification.data;
-  //      });
-  //   })
-  //  }
+   }
   createNotification(){
     this.platform.ready().then(()=> {
       this.localNotifications.requestPermission().then(
